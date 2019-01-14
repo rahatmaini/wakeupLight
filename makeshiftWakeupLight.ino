@@ -1,7 +1,7 @@
 //set the current time here, 0 0 0 is midnight, 23 59 59 is 1 second before that
 int second=0;
-int minute=0;
-int hour=0;
+int minute=51;
+int hour=7;
 unsigned long previousMillis=millis();
 
 void setup() {
@@ -12,9 +12,9 @@ void loop() {
   if ((unsigned long)(millis() - previousMillis) >= 1000)
   {
     previousMillis=millis();
-    second++;
+    second+=2;
   }
-  if (second==60)
+  if (second>=60)
   {
     second=0;
     minute++;
@@ -25,20 +25,16 @@ void loop() {
     hour++;
   }
 
-  if (hour==23 && minute==0) //11 o clock, reading light, it's good to read yourself to bed :) 
+  if (hour==23 && minute==59 && second==0) //11 o clock, reading light, it's good to read yourself to bed :) 
   {
-    //fade it on
-    for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) 
-    {
-    analogWrite(1, fadeValue);
-    delay(30);
-    }
+    digitalWrite(1,HIGH);
+    second=2;
   }
   
   if (hour==24)
   {
     hour=0;
-    analogWrite(1,0); //lights off
+    digitalWrite(1,LOW); //lights off
     //midnight strikes
   }
 
@@ -49,7 +45,7 @@ void loop() {
   {
     for (int fadeValue = 0 ; fadeValue <= 255; fadeValue += 5) {
     analogWrite(1, fadeValue);
-    delay(7058.8235); //30 mins / 255 states = 0.117647059 min / state = 7058.8235 milliseconds / state
+    delay(35294.1176); //30 mins / (255/5) states = 0.588235294 min / state = 35294.1176 milliseconds / state
     }
     hour=7;
     minute=0;
@@ -57,14 +53,14 @@ void loop() {
 
   if (hour==7 && minute==0)
   {
-    analogWrite(1, 255);
+    digitalWrite(1,HIGH);
   }
 
   if (hour==7 && minute==5)
   {
-    analogWrite(1, 0); //shut off after 5 mins
+    digitalWrite(1,LOW); //shut off after 5 mins
   }
-
+  
   
   
 }
