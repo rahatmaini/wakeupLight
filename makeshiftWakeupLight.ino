@@ -51,6 +51,8 @@ void loop() {
     analogWrite(1, fadeValue);
     delay(7058.8235); //30 mins / 255 states = 0.117647059 min / state = 7058.8235 milliseconds / state
     }
+    hour=7;
+    minute=0;
   }
 
   if (hour==7 && minute==0)
